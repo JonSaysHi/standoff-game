@@ -9,6 +9,11 @@ shoot.addEventListener("click", function () {
 });
 
 function computerPlay() {
-  let options = ["shoot", "reload", "block"];
-  return options[Math.floor(Math.random() * options.length)];
+  if (computerBullets === 0) {
+    let options = ["reload", "block"];
+    return options[Math.floor(Math.random() * options.length)];
+  } else {
+    let options = ["shoot", "reload", "block"];
+    return options[Math.floor(Math.random() * options.length)];
+  }
 }
