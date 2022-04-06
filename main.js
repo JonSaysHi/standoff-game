@@ -82,7 +82,7 @@ function playRound(playerSelection, computerSelection) {
     result = "You win!";
     playerBullets = 0;
     computerBullets = 0;
-    setTimeout(victorySound, 500);
+    setTimeout(victorySound, 50);
   } else if (playerSelection === "Block" && computerSelection === "Shoot") {
     result = "You blocked their shot!";
     ricochetSound();
@@ -92,7 +92,7 @@ function playRound(playerSelection, computerSelection) {
     playerBullets = 0;
     computerBullets = 0;
     shootSound();
-    setTimeout(lossSound, 500);
+    setTimeout(lossSound, 50);
   } else {
     return;
   }
