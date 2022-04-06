@@ -5,25 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="main.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
     <title>Standoff</title>
   </head>
   <body>
+    <div id="container-background"></div>
     <div id="container-main">
-      <div id="container-left">Player bullets</div>
+      <div id="container-left">
+        <div class="user-name">Player</div>
+        <div><img src="Bullet.png" alt="Bullets" id="bullet-img"></div>
+        <div id="full-score">
+          <span id="p-score">0</span>
+          <span>/6</span>
+        </div>
+        <div><span id="p-move">Bang!</span></div>
+      </div>
       <div id="container-middle">
         <h1>Welcome to Standoff</h1>
-        <div>
-          The aim of the game is to beat your opponent in a good old western
-          shootout.
+        <div id="game-description">
+          <span
+            >The aim of the game is to beat your opponent in a good old western
+            shootout.
+          </span>
+          <span>Shoot your opponent before they shoot you!</span>
         </div>
-        <div>You have three moves: Shoot, Reload and Block.</div>
+        <div><span id="result"></span></div>
         <div id="button-moves">
-          <div><button id="shoot">Shoot</button></div>
-          <div><button id="reload">Reload</button></div>
-          <div><button id="block">Block</button></div>
+          <button id="shoot">Shoot</button>
+          <button id="reload">Reload</button>
+          <button id="block">Block</button>
         </div>
       </div>
-      <div id="container-right">Computer bullets</div>
+      <div id="container-right">
+        <div class="user-name">Computer</div>
+        <div><img src="Bullet.png" alt="Bullets" id="bullet-img"></div>
+        <div id="full-score">
+            <span id="c-score">0</span>
+            <span>/6</span>
+          </div>
+          <div id="c-move">Bang!</div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
