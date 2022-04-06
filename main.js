@@ -8,8 +8,8 @@ shoot.addEventListener("click", () => {
   let playerSelection = "shoot";
   let computerSelection = computerPlay();
   const result = playRound(playerSelection, computerSelection);
-  console.log(playerSelection);
-  console.log(computerSelection);
+  console.log("Player Selection: " + playerSelection);
+  console.log("Computer Selection: " + computerSelection);
   console.log(result);
   console.log(playerBullets);
   console.log(computerBullets);
@@ -17,10 +17,11 @@ shoot.addEventListener("click", () => {
 
 reload.addEventListener("click", () => {
   let playerSelection = "reload";
+  playerBullets++;
   let computerSelection = computerPlay();
   const result = playRound(playerSelection, computerSelection);
-  console.log(playerSelection);
-  console.log(computerSelection);
+  console.log("Player Selection: " + playerSelection);
+  console.log("Computer Selection: " + computerSelection);
   console.log(result);
   console.log(playerBullets);
   console.log(computerBullets);
@@ -30,20 +31,24 @@ block.addEventListener("click", () => {
   let playerSelection = "block";
   let computerSelection = computerPlay();
   const result = playRound(playerSelection, computerSelection);
-  console.log(playerSelection);
-  console.log(computerSelection);
+  console.log("Player Selection: " + playerSelection);
+  console.log("Computer Selection: " + computerSelection);
   console.log(result);
   console.log(playerBullets);
   console.log(computerBullets);
 });
 
 function computerPlay() {
-  if (playerBullets <= 0) {
-    return;
+  if (playerBullets === 0 && computerBullets === 0) {
+    let options = "reload";
+    return options;
+  } else if (playerBullets === 0 && computerBullets > 0) {
+    let options = ["shoot", "reload"];
+    return options[Math.floor(Math.random() * options.length)];
   } else if (computerBullets === 0) {
     let options = ["reload", "block"];
     return options[Math.floor(Math.random() * options.length)];
-  } else {
+  } else if (playerBullets >= 0 && computerBullets > 0) {
     let options = ["shoot", "reload", "block"];
     return options[Math.floor(Math.random() * options.length)];
   }
@@ -51,16 +56,14 @@ function computerPlay() {
 
 function playRound(playerSelection, computerSelection) {
   let result;
-  if (playerBullets <= 0) {
+  if (playerBullets <= 0 && playerSelection === "shoot") {
     result = "You have no bullets. You must reload";
   } else if (playerSelection === "reload" && computerSelection === "reload") {
     result = "";
-    playerBullets++;
     computerBullets++;
   } else if (playerSelection === "reload" && computerSelection === "block") {
     result = "";
-    playerBullets++;
-  } else if (playerSelection === "block" && computerSelection === "relaod") {
+  } else if (playerSelection === "block" && computerSelection === "reload") {
     result = "";
     computerBullets++;
   } else if (playerSelection === "shoot" && computerSelection === "shoot") {
@@ -80,7 +83,7 @@ function playRound(playerSelection, computerSelection) {
     result = "You lose!";
     computerBullets--;
   } else {
-    result = "You have no bullets";
+    return;
   }
   return result;
 }
