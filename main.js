@@ -17,7 +17,6 @@ shoot.addEventListener("click", () => {
 
 reload.addEventListener("click", () => {
   let playerSelection = "reload";
-  playerBullets++;
   let computerSelection = computerPlay();
   const result = playRound(playerSelection, computerSelection);
   console.log("Player Selection: " + playerSelection);
@@ -38,34 +37,24 @@ block.addEventListener("click", () => {
   console.log(computerBullets);
 });
 
-function computerPlay() {
-  if (playerBullets === 0 && computerBullets === 0) {
-    let options = "reload";
-    return options;
-  } else if (playerBullets === 0 && computerBullets > 0) {
-    let options = ["shoot", "reload"];
-    return options[Math.floor(Math.random() * options.length)];
-  } else if (computerBullets === 0) {
-    let options = ["reload", "block"];
-    return options[Math.floor(Math.random() * options.length)];
-  } else if (playerBullets >= 0 && computerBullets > 0) {
-    let options = ["shoot", "reload", "block"];
-    return options[Math.floor(Math.random() * options.length)];
-  }
-}
-
 function playRound(playerSelection, computerSelection) {
   let result;
-  if (playerBullets <= 0 && playerSelection === "shoot") {
+  if (playerBullets === 6 && playerSelection === "reload") {
+    result = "Your gun is full, you must shoot or block.";
+  } else if (playerBullets <= 0 && playerSelection === "shoot") {
     result = "You have no bullets. You must reload";
+  } else if (playerSelection === "block" && computerSelection === "block") {
+    result = "";
   } else if (playerSelection === "reload" && computerSelection === "reload") {
     result = "";
     computerBullets++;
+    playerBullets++;
   } else if (playerSelection === "reload" && computerSelection === "block") {
     result = "";
-  } else if (playerSelection === "block" && computerSelection === "reload") {
-    result = "";
-    computerBullets++;
+    playerBullets++;
+  } else if (playerSelection === "block" && computerBullets === 0) {
+    result =
+      "You have no bullets, and neither have they. You should probably reload.";
   } else if (playerSelection === "shoot" && computerSelection === "shoot") {
     result = "Your shots cancel each other out";
     playerBullets--;
@@ -75,15 +64,56 @@ function playRound(playerSelection, computerSelection) {
     playerBullets--;
   } else if (playerSelection === "shoot" && computerSelection === "reload") {
     result = "You win!";
-    playerBullets--;
+    playerBullets = 0;
+    computerBullets = 0;
   } else if (playerSelection === "block" && computerSelection === "shoot") {
     result = "You blocked their shot!";
     computerBullets--;
   } else if (playerSelection === "reload" && computerSelection === "shoot") {
     result = "You lose!";
-    computerBullets--;
+    playerBullets = 0;
+    computerBullets = 0;
   } else {
     return;
   }
   return result;
+}
+
+function computerPlay() {
+  if (computerBullets === 6) {
+    let options = ["shoot", "block"];
+    return options[Math.floor(Math.random() * options.length)];
+  } else if (computerBullets === 0 && playerBullets === 0) {
+    return "reload";
+  } else if (computerBullets > 0 && playerBullets === 0) {
+    let options = ["shoot", "reload"];
+    return options[Math.floor(Math.random() * options.length)];
+  } else if (computerBullets === 0 && playerBullets > 0) {
+    let options = ["reload", "block"];
+    return options[Math.floor(Math.random() * options.length)];
+  } else if (computerBullets >= 1 && playerBullets >= 1) {
+    let options = ["shoot", "reload", "block"];
+    return options[Math.floor(Math.random() * options.length)];
+  }
+}
+
+function checkWinner() {
+  if (result === "You win!") {
+    winner =
+      "Congratulations, you won. Choose your next move to restart the game!";
+    playerScore = 0;
+    computerScore = 0;
+  } else if (result === "You lose!") {
+    winner = "Unlucky, you lost. Choose your next move to restart the game!";
+    playerScore = 0;
+    computerScore = 0;
+  }
+  document.querySelector("#checkWinner").innerHTML = winner;
+}
+
+function reset() {
+  if (playerScore === 0 || computerScore === 0) {
+    winner = "";
+  }
+  document.querySelector("#checkWinner").innerHTML = winner;
 }
